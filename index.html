@@ -1,55 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>My Photo Site</title>
-  <style>
-    body {
-      font-family: Arial;
-      background: #f0f2f5;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<title>My Insta Clone</title>
 
-    .container {
-      width: 400px;
-      margin: 20px auto;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #fafafa;
+}
 
-    .post {
-      background: white;
-      padding: 15px;
-      margin-top: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+header {
+  background: white;
+  padding: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  border-bottom: 1px solid #dbdbdb;
+  position: sticky;
+  top: 0;
+}
 
-    img {
-      width: 100%;
-      border-radius: 10px;
-    }
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+}
 
-    button {
-      margin-top: 10px;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
+.upload-box {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  text-align: center;
+}
 
-    .comments {
-      margin-top: 10px;
-      text-align: left;
-    }
-  </style>
+.post {
+  background: white;
+  margin-top: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.profile img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post img {
+  width: 100%;
+}
+
+.actions {
+  padding: 10px;
+}
+
+.like-btn {
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.1s;
+}
+
+.like-btn:active {
+  transform: scale(1.3);
+}
+
+.comment-section {
+  padding: 0 10px 10px 10px;
+}
+
+.comment-section input {
+  width: 75%;
+  padding: 5px;
+}
+
+.comment-section button {
+  padding: 6px;
+  background: #0095f6;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.comments p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>📸 My Photo Feed</h1>
+<header>📸 My Insta</header>
 
-  <div class="container">
+<div class="container">
+
+  <div class="upload-box">
     <input type="file" id="imageInput">
-    <button onclick="uploadPhoto()">Upload</button>
-
-    <div id="feed"></div>
+    <button onclick="uploadPhoto()">업로드</button>
   </div>
+
+  <div id="feed"></div>
+
+</div>
 
 <script>
 function uploadPhoto() {
@@ -66,31 +129,41 @@ function uploadPhoto() {
     let likes = 0;
 
     post.innerHTML = `
-      <img src="${e.target.result}">
-      <p>❤️ <span class="likeCount">0</span></p>
-      <button class="likeBtn">Like</button>
-      <div>
-        <input type="text" class="commentInput" placeholder="댓글 입력">
-        <button class="commentBtn">댓글 달기</button>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/150?img=3">
+        민석
       </div>
-      <div class="comments"></div>
+
+      <img src="${e.target.result}">
+
+      <div class="actions">
+        <span class="like-btn">❤️</span>
+        <span class="like-count">0</span> likes
+      </div>
+
+      <div class="comment-section">
+        <input type="text" class="comment-input" placeholder="댓글 달기...">
+        <button class="comment-btn">게시</button>
+        <div class="comments"></div>
+      </div>
     `;
 
-    const likeBtn = post.querySelector(".likeBtn");
-    const likeCount = post.querySelector(".likeCount");
+    const likeBtn = post.querySelector(".like-btn");
+    const likeCount = post.querySelector(".like-count");
+
     likeBtn.onclick = function() {
       likes++;
       likeCount.textContent = likes;
     };
 
-    const commentBtn = post.querySelector(".commentBtn");
-    const commentInput = post.querySelector(".commentInput");
+    const commentBtn = post.querySelector(".comment-btn");
+    const commentInput = post.querySelector(".comment-input");
     const commentsDiv = post.querySelector(".comments");
 
     commentBtn.onclick = function() {
       if (commentInput.value.trim() === "") return;
       const p = document.createElement("p");
-      p.textContent = "💬 " + commentInput.value;
+      p.textContent = "민석: " + commentInput.value;
       commentsDiv.appendChild(p);
       commentInput.value = "";
     };
